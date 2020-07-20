@@ -2,10 +2,10 @@
 Poc to demonstrate the kafka streams join capability
 
 
-1 - Start Kafka with docker-compose.yml inside of kafka-stream-function: docker-compose up
-2 - Run the kafka-stream-function and producer-activation-info service
-3 -  curl localhost:8081/activation/key/activation
-4 -  curl localhost:8081/info/abc_random/infoKey
+- 1 - Start Kafka with docker-compose.yml inside of kafka-stream-function: docker-compose up
+- 2 - Run the kafka-stream-function and producer-activation-info service
+- 3 -  curl localhost:8081/activation/key/activation
+- 4 -  curl localhost:8081/info/abc_random/infoKey
 When you run the command 3 and 4 you will see the activationInfo (join function) applied and afterJoinConsumer (output function)
 
 Disclaimer:
