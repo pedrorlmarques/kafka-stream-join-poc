@@ -40,13 +40,22 @@ class KafkaConfiguration {
                 .map((key, value) -> new KeyValue<>(key.replace("_random", ""), value))
                 .join(wordsCount, ActivationInfo::new, JoinWindows.of(Duration.ofSeconds(WINDOW_SIZE_SECONDS)),
                         StreamJoined.with(Serdes.String(), new Serdes.StringSerde(), new JsonSerde<>(Activation.class)))
-                .peek((key, value) -> System.out.println("ActivationInfo:\nKey: " + key + " Value: " + value));
+                .peek((key, value) -> System.out.println("ActivationInfoJoin:\nKey: " + key + " Value: " + value));
+    }
+
+    @Bean
+    public Consumer<KStream<String, String>> consumeActivationOnly() {
+
+        return activation -> activation
+                .foreach((key, value) -> System.out.println("ConsumeActivationOnly:\nKey: " + key + " Value: " + value));
+
     }
 
 
     @Bean
     public Consumer<KStream<String, ActivationInfo>> afterJoinConsumer() {
-        return afterJoinConsumer -> afterJoinConsumer.foreach((key, value) -> System.out.println("AfterJoin:\nKey: " + key + " Value: " + value));
+        return afterJoinConsumer -> afterJoinConsumer
+                .foreach((key, value) -> System.out.println("AfterJoin:\nKey: " + key + " Value: " + value));
     }
 
 }
